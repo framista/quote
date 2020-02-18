@@ -13,7 +13,7 @@ class FavoriteQuotes extends Component {
 
     deleteQuote(param) {
         const id = param.id
-        const quotes = JSON.parse(localStorage.getItem('quotes')).reverse()
+        const quotes = JSON.parse(localStorage.getItem('quotes'))
         localStorage.setItem('quotes', JSON.stringify(quotes.filter(quote => quote.id !== id)))
         window.location.reload(false);
     }
