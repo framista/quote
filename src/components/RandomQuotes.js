@@ -50,7 +50,7 @@ class RandomQuotes extends Component {
 
     render() {
         return (
-            <Container className="mt-5">
+            <Container className="mt-3">
                 {this.state.show &&
                     <SavedModal quote={this.state.quote}></SavedModal>
                 }
