@@ -13,13 +13,16 @@ class FavoriteQuotes extends Component {
 
     deleteQuote(param) {
         const id = param.id
-        const quotes = JSON.parse(localStorage.getItem('quotes')).reverse() || []
+        const quotes = JSON.parse(localStorage.getItem('quotes')).reverse()
         localStorage.setItem('quotes', JSON.stringify(quotes.filter(quote => quote.id !== id)))
         window.location.reload(false);
     }
 
     componentDidMount() {
-        const quotes = JSON.parse(localStorage.getItem('quotes')).reverse() || []
+        const quotes = JSON.parse(localStorage.getItem('quotes')) || []
+        if (quotes.length) {
+            quotes.reverse()
+        }
         this.setState({
             result: quotes
         })
