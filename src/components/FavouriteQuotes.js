@@ -26,7 +26,6 @@ class FavoriteQuotes extends Component {
         this.setState({
             result: quotes
         })
-        console.log(quotes)
     }
 
     render() {
