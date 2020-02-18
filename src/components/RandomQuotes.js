@@ -2,14 +2,40 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import Quote from './Quote'
 import { Container } from 'react-bootstrap';
+import SavedModal from './SavedModal';
 
 class RandomQuotes extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            result: []
+            result: [],
+            show: false
         }
+    }
+
+    showModal = param => {
+        if (param.sign === "+") {
+            this.saveQuote(param)
+        }
+        this.setState({
+            show: true
+        });
+        setTimeout(() => this.setState({
+            show: false
+        }), 1500)
+    }
+
+    saveQuote = (param) => {
+        const { id, author, text } = param;
+        this.setState({ quote: { id, author, text } })
+        const quotes = JSON.parse(localStorage.getItem('quotes')) || []
+        const quateSaved = quotes.some(quote => quote.id === id)
+        if (!quateSaved) {
+            quotes.push({ id, author, text })
+            localStorage.setItem('quotes', JSON.stringify(quotes))
+        }
+
     }
 
     componentDidMount() {
@@ -24,7 +50,10 @@ class RandomQuotes extends Component {
 
     render() {
         return (
-            <Container>
+            <Container className="mt-5">
+                {this.state.show &&
+                    <SavedModal quote={this.state.quote}></SavedModal>
+                }
                 {this.state.result.map(quote =>
                     <Quote
                         key={quote._id}
@@ -32,6 +61,7 @@ class RandomQuotes extends Component {
                         id={quote._id}
                         text={quote.quoteText}
                         sign="+"
+                        addModal={this.showModal}
                     ></Quote>
 
                 )}
