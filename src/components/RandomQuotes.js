@@ -61,7 +61,7 @@ class RandomQuotes extends Component {
                         id={quote._id}
                         text={quote.quoteText}
                         sign="+"
-                        addModal={this.showModal}
+                        modalFnc={this.showModal}
                     ></Quote>
 
                 )}

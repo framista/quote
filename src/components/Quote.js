@@ -13,7 +13,7 @@ class Quote extends Component {
                     <Form.Group as={Row} className="d-flex justify-content-end align-items-center">
                         <Form.Label className="mr-2">{author}</Form.Label>
                         <Button
-                            onClick={this.props.addModal.bind(this, { id, author, text, sign })} variant="outline-primary">{sign}</Button>
+                            onClick={this.props.modalFnc.bind(this, { id, author, text, sign })} variant="outline-primary">{sign}</Button>
                     </Form.Group>
                 </Alert>
             </>

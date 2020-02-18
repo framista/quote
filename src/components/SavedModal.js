@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap'
 function SavedModal(props) {
 
     const { author, text } = props.quote
-    const [show, setShow] = useState(true);
+    const show = true;
 
     return (
         <>
