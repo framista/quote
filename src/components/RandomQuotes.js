@@ -3,6 +3,7 @@ import axios from 'axios'
 import Quote from './Quote'
 import { Container } from 'react-bootstrap';
 import SavedModal from './SavedModal';
+import Loader from './Loader';
 
 class RandomQuotes extends Component {
 
@@ -10,7 +11,8 @@ class RandomQuotes extends Component {
         super(props)
         this.state = {
             result: [],
-            show: false
+            show: false,
+            isFetching: false,
         }
     }
 
@@ -39,22 +41,28 @@ class RandomQuotes extends Component {
     }
 
     componentDidMount() {
+        this.setState({ isFetching: true })
         axios.get("https://quote-garden.herokuapp.com/quotes/all")
             .then(res => {
                 const data = res.data.results;
                 const randomStart = Math.floor(Math.random() * data.length - 100);
                 const randomEnd = randomStart + 30;
-                this.setState({ result: data.slice(randomStart, randomEnd) })
+                this.setState({ 
+                    result: data.slice(randomStart, randomEnd), 
+                    isFetching: false,
+                 })
             })
     }
 
     render() {
+        const {isFetching} = this.state;
         return (
             <Container className="mt-3">
                 {this.state.show &&
-                    <SavedModal quote={this.state.quote}></SavedModal>
+                    <SavedModal quote={this.state.quote}/>
                 }
-                {this.state.result.map(quote =>
+                { isFetching && <Loader></Loader>}
+                { !isFetching && this.state.result.map(quote =>
                     <Quote
                         key={quote._id}
                         author={quote.quoteAuthor}
